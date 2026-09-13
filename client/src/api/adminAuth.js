@@ -1,7 +1,5 @@
-import axios from "axios";
-
-const ADMIN_API = "http://localhost:5000/api/admin";
+import { apiClient } from "./api";
 
 export const loginAdmin = async (data) => {
-    return await axios.post(`${ADMIN_API}/login`, data);
+    return await apiClient.post("/admin/login", data);
 };

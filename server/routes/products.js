@@ -1,8 +1,8 @@
 import express from "express";
 import Product from "../models/product.js";
 import multer from "multer";
-import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
 import streamifier from "streamifier";
 import { requireAuth, requireAdmin } from "../middleware/auth.js";
 
@@ -20,7 +20,7 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// -------------------- Add Product --------------------
+// Add Product
 router.post("/add", requireAuth, requireAdmin, upload.single("image"), async (req, res) => {
     try {
         const { name, description, price, category, stock } = req.body;
@@ -55,7 +55,7 @@ router.post("/add", requireAuth, requireAdmin, upload.single("image"), async (re
     }
 });
 
-// -------------------- Update Product --------------------
+// Update Product
 router.put("/:id", requireAuth, requireAdmin, upload.single("image"), async (req, res) => {
     try {
         const { name, description, price, category, stock } = req.body;
@@ -90,7 +90,7 @@ router.put("/:id", requireAuth, requireAdmin, upload.single("image"), async (req
     }
 });
 
-// -------------------- Get All Products --------------------
+// Get All Products
 router.get("/", async (req, res) => {
     try {
         const products = await Product.find();
@@ -101,7 +101,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// -------------------- Get Product by ID --------------------
+// Get Product by ID 
 router.get("/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -113,7 +113,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// -------------------- Delete Product --------------------
+// Delete Product 
 router.delete("/:id", requireAuth, requireAdmin, async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);

@@ -2,22 +2,25 @@ import React from "react";
 import { FiX } from "react-icons/fi";
 
 const ProfileDrawer = ({ open, onClose, user, admin, handleLogout }) => {
-    if (!open) return null;
-
     const name = user?.name || admin?.name || "User";
     const email = user?.email || admin?.email || "email@example.com";
     const role = user ? "User" : admin ? "Admin" : "Unknown";
 
     return (
         <>
-            {/* Transparent overlay that doesn't block visibility */}
-            <div
-                className="fixed inset-0 bg-transparent z-40"
-                onClick={onClose}
-            />
+        
+            {open && (
+                <div
+                    className="fixed inset-0 bg-transparent z-40"
+                    onClick={onClose}
+                />
+            )}
 
-            {/* Drawer */}
-            <div className="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg flex flex-col pointer-events-auto transition-transform duration-300 ease-in-out translate-x-0">
+            <div 
+                className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg flex flex-col transition-transform duration-300 ease-in-out ${
+                    open ? "translate-x-0" : "translate-x-full"
+                }`}
+            >
                 {/* Header */}
                 <div className="flex justify-between items-center p-4 border-b">
                     <h2 className="font-bold text-lg">Profile</h2>

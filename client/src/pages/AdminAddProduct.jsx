@@ -45,7 +45,7 @@ const AdminAddProduct = () => {
             resetForm();
         } catch (err) {
             console.error(err);
-            setMessage(err.message || err.message?.message || "Server error");
+            setMessage(err?.response?.data?.message || err.message || "❌ Server error");
         } finally {
             setLoading(false);
         }

@@ -3,7 +3,7 @@ import Cart from "../models/Cart.js";
 
 const router = express.Router();
 
-/* 🛒 1️⃣ Add Product to Cart → POST /api/cart/add */
+// Add Product to Cart → POST /api/cart/add
 router.post("/add", async (req, res) => {
     try {
         const { userId, productId, quantity } = req.body;
@@ -36,7 +36,7 @@ router.post("/add", async (req, res) => {
     }
 });
 
-/* 🧾 2️⃣ Get User Cart → GET /api/cart/:userId */
+// Get User Cart → GET /api/cart/:userId 
 router.get("/:userId", async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.params.userId })
@@ -52,7 +52,7 @@ router.get("/:userId", async (req, res) => {
     }
 });
 
-/* 🔁 3️⃣ Update Quantity → PUT /api/cart/update */
+//  Update Quantity → PUT /api/cart/update 
 router.put("/update", async (req, res) => {
     try {
         const { userId, productId, quantity } = req.body;
@@ -79,7 +79,7 @@ router.put("/update", async (req, res) => {
     }
 });
 
-/* ❌ 4️⃣ Delete Product → DELETE /api/cart/delete/:userId/:productId */
+// Delete Product → DELETE /api/cart/delete/:userId/:productId 
 router.delete("/delete/:userId/:productId", async (req, res) => {
     try {
         const { userId, productId } = req.params;
@@ -102,7 +102,7 @@ router.delete("/delete/:userId/:productId", async (req, res) => {
     }
 });
 
-/* 🧹 5️⃣ Clear Cart → DELETE /api/cart/clear/:userId */
+// Clear Cart → DELETE /api/cart/clear/:userId 
 router.delete("/clear/:userId", async (req, res) => {
     try {
         const { userId } = req.params;

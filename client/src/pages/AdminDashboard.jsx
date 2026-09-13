@@ -6,6 +6,11 @@ const AdminDashboard = () => {
     const { admin, logoutAdmin } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logoutAdmin();
+        navigate("/admin/login");
+    };
+
     return (
         <div>
             <header className="p-4 flex justify-between items-center bg-gray-100">
@@ -27,7 +32,7 @@ const AdminDashboard = () => {
                         Edit / Delete Products
                     </button>
                     <button
-                        onClick={logoutAdmin}
+                        onClick={handleLogout}
                         className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
                     >
                         Logout
@@ -37,7 +42,6 @@ const AdminDashboard = () => {
 
             <main className="p-4">
                 <h2 className="text-xl font-bold">Dashboard</h2>
-                {/* Add any dashboard widgets if needed */}
             </main>
         </div>
     );

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
     return (
-        <div className="border rounded-lg shadow hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col bg-white  ">
-            {/* Product Image */}
+        <div className="border rounded-lg shadow hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col bg-white">
+        
             <div className="h-52 w-full overflow-hidden">
                 <img
                     src={product.imageUrl || "https://via.placeholder.com/300"}
@@ -14,14 +14,13 @@ const ProductCard = ({ product }) => {
                 />
             </div>
 
-            {/* Product Info */}
-            <div className="p-4 flex flex-col flex-1 justify-between h-14 bg-linear-65 from-purple-500 to-pink-500">
+            
+            <div className="p-4 flex flex-col flex-1 justify-between">
                 <div>
                     <h2 className="text-lg font-semibold text-gray-800">{product.name}</h2>
                     <p className="text-gray-500 text-sm mt-1">{product.category}</p>
                 </div>
 
-                {/* Price + View Button */}
                 <div className="mt-4 flex justify-between items-center">
                     <span className="text-blue-600 font-bold text-lg">₹{product.price}</span>
                     <Link

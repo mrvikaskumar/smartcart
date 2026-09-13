@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Checkout = () => {
-    const { user } = useContext(AuthContext); // get logged-in user
+    const { user } = useContext(AuthContext); 
     const userId = user?._id || user?.id;
     const [cart, setCart] = useState(null);
     const navigate = useNavigate();
 
-    // Fetch cart for logged-in user
     useEffect(() => {
-        if (!userId) return; // safety
+        if (!userId) return; 
         const fetchCart = async () => {
             try {
                 const data = await getCart(userId);
@@ -47,11 +46,11 @@ const Checkout = () => {
         if (!res) return alert("Razorpay SDK failed to load. Check your internet.");
 
         try {
-            const order = await createCheckout(userId); // backend creates Razorpay order
+            const order = await createCheckout(userId); 
             if (!order) return alert("Failed to create order.");
 
             const options = {
-                key: import.meta.env.VITE_RAZORPAY_KEY, // frontend key
+                key: import.meta.env.VITE_RAZORPAY_KEY, 
                 amount: order.amount,
                 currency: order.currency,
                 name: "SmartCart",
@@ -68,8 +67,8 @@ const Checkout = () => {
 
                         if (result) {
                             alert("✅ Payment successful!");
-                            await clearCart(userId); // clear cart after successful payment
-                            navigate("/orders"); // redirect to orders page
+                            await clearCart(userId); 
+                            navigate("/orders"); 
                         } else {
                             alert("❌ Payment verification failed.");
                         }
@@ -79,8 +78,8 @@ const Checkout = () => {
                     }
                 },
                 prefill: {
-                    name: user.name,
-                    email: user.email,
+                    name: user?.name || "Customer",
+                    email: user?.email || "",
                 },
                 theme: { color: "#2563EB" },
             };

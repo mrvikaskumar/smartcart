@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { addToCart } from "../api/api";
+import { addToCart, getProductById } from "../api/api"; 
+import { AuthContext } from "../context/AuthContext"; 
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { user } = useContext(AuthContext); 
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-                setProduct(res.data);
+                const data = await getProductById(id);
+                setProduct(data);
             } catch (err) {
                 console.error("Error fetching product:", err);
             } finally {
@@ -22,10 +23,8 @@ const ProductDetails = () => {
         fetchProduct();
     }, [id]);
 
-    // ✅ FIX: handleAddToCart must be inside the component
     const handleAddToCart = async () => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user?.id;
+        const userId = user?.id || user?._id;
 
         if (!userId) {
             alert("Please login first!");
@@ -61,7 +60,6 @@ const ProductDetails = () => {
                     <p className="text-blue-600 font-bold text-2xl">₹{product.price}</p>
                     <p className="text-gray-800 mt-4">{product.description}</p>
 
-                    {/* ✅ ADD TO CART BUTTON */}
                     <button
                         onClick={handleAddToCart}
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-4"

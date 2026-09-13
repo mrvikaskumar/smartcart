@@ -1,11 +1,16 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api";
+// Centralized secure Axios instance
+export const apiClient = axios.create({
+    baseURL: "http://localhost:5000/api",
+    withCredentials: true, // Mandatory for HttpOnly cookies
+});
 
-// --------- Products ---------
+// -------------------- Products --------------------
+
 export const getAllProducts = async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/products`);
+        const res = await apiClient.get("/products");
         return res.data;
     } catch (err) {
         console.error(err);
@@ -15,7 +20,7 @@ export const getAllProducts = async () => {
 
 export const getProductById = async (id) => {
     try {
-        const res = await axios.get(`${BASE_URL}/products/${id}`);
+        const res = await apiClient.get(`/products/${id}`);
         return res.data;
     } catch (err) {
         console.error(err);
@@ -25,11 +30,9 @@ export const getProductById = async (id) => {
 
 export const createProduct = async (formData) => {
     try {
-        const token = localStorage.getItem("adminToken");
-        const res = await axios.post(`${BASE_URL}/products/add`, formData, {
+        const res = await apiClient.post("/products/add", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`,
             },
         });
         return res.data;
@@ -41,11 +44,9 @@ export const createProduct = async (formData) => {
 
 export const updateProduct = async (id, formData) => {
     try {
-        const token = localStorage.getItem("adminToken");
-        const res = await axios.put(`${BASE_URL}/products/${id}`, formData, {
+        const res = await apiClient.put(`/products/${id}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`,
             },
         });
         return res.data;
@@ -57,10 +58,7 @@ export const updateProduct = async (id, formData) => {
 
 export const deleteProduct = async (id) => {
     try {
-        const token = localStorage.getItem("adminToken");
-        const res = await axios.delete(`${BASE_URL}/products/${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await apiClient.delete(`/products/${id}`);
         return res.data;
     } catch (err) {
         console.error(err);
@@ -68,13 +66,11 @@ export const deleteProduct = async (id) => {
     }
 };
 
-
 // -------------------- Cart --------------------
 
-// 1️⃣ Get user cart
 export const getCart = async (userId) => {
     try {
-        const res = await axios.get(`${BASE_URL}/cart/${userId}`);
+        const res = await apiClient.get(`/cart/${userId}`);
         return res.data;
     } catch (err) {
         console.error("Error fetching cart:", err);
@@ -82,10 +78,9 @@ export const getCart = async (userId) => {
     }
 };
 
-// 2️⃣ Add product to cart
 export const addToCart = async (userId, productId, quantity = 1) => {
     try {
-        const res = await axios.post(`${BASE_URL}/cart/add`, { userId, productId, quantity });
+        const res = await apiClient.post("/cart/add", { userId, productId, quantity });
         return res.data;
     } catch (err) {
         console.error("Error adding to cart:", err);
@@ -93,10 +88,9 @@ export const addToCart = async (userId, productId, quantity = 1) => {
     }
 };
 
-// 3️⃣ Update cart product quantity
 export const updateCart = async (userId, productId, quantity) => {
     try {
-        const res = await axios.put(`${BASE_URL}/cart/update`, { userId, productId, quantity });
+        const res = await apiClient.put("/cart/update", { userId, productId, quantity });
         return res.data;
     } catch (err) {
         console.error("Error updating cart:", err);
@@ -104,10 +98,9 @@ export const updateCart = async (userId, productId, quantity) => {
     }
 };
 
-// 4️⃣ Remove product from cart
 export const removeFromCart = async (userId, productId) => {
     try {
-        const res = await axios.delete(`${BASE_URL}/cart/delete/${userId}/${productId}`);
+        const res = await apiClient.delete(`/cart/delete/${userId}/${productId}`);
         return res.data;
     } catch (err) {
         console.error("Error removing from cart:", err);
@@ -115,10 +108,9 @@ export const removeFromCart = async (userId, productId) => {
     }
 };
 
-// 5️⃣ Clear entire cart
 export const clearCart = async (userId) => {
     try {
-        const res = await axios.delete(`${BASE_URL}/cart/clear/${userId}`);
+        const res = await apiClient.delete(`/cart/clear/${userId}`);
         return res.data;
     } catch (err) {
         console.error("Error clearing cart:", err);
@@ -128,10 +120,9 @@ export const clearCart = async (userId) => {
 
 // -------------------- Payment --------------------
 
-// 1️⃣ Create Razorpay checkout
 export const createCheckout = async (userId) => {
     try {
-        const res = await axios.post(`${BASE_URL}/payment/checkout`, { userId });
+        const res = await apiClient.post("/payment/checkout", { userId });
         return res.data;
     } catch (err) {
         console.error("Error creating checkout:", err);
@@ -139,10 +130,9 @@ export const createCheckout = async (userId) => {
     }
 };
 
-// 2️⃣ Payment success
 export const paymentSuccess = async (userId, razorpay_order_id, razorpay_payment_id, razorpay_signature) => {
     try {
-        const res = await axios.post(`${BASE_URL}/payment/success`, {
+        const res = await apiClient.post("/payment/success", {
             userId,
             razorpay_order_id,
             razorpay_payment_id,
@@ -155,10 +145,9 @@ export const paymentSuccess = async (userId, razorpay_order_id, razorpay_payment
     }
 };
 
-// 3️⃣ Get all orders
 export const getAllOrders = async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/payment/orders`);
+        const res = await apiClient.get("/payment/orders");
         return res.data;
     } catch (err) {
         console.error("Error fetching orders:", err);

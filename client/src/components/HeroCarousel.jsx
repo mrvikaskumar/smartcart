@@ -36,12 +36,11 @@ const HeroCarousel = () => {
 
     return (
         <div
-            className="relative mx-auto mt-4 md:mt-6 rounded-lg overflow-hidden group"
-            style={{ maxWidth: "1430px", width: "100%", height: "220px" }}
+            className="relative mx-auto mt-4 md:mt-6 rounded-lg overflow-hidden group max-w-[1430px] w-full h-[220px]"
             onMouseEnter={stopAutoSlide}
             onMouseLeave={startAutoSlide}
         >
-            {/* Slides */}
+    
             {banners.map((banner, index) => (
                 <img
                     key={index}
@@ -52,7 +51,6 @@ const HeroCarousel = () => {
                 />
             ))}
 
-            {/* Navigation Buttons */}
             <button
                 onClick={prevSlide}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 text-white p-2 rounded-full hover:bg-opacity-60 transition-opacity opacity-0 group-hover:opacity-100 z-30"
@@ -65,8 +63,7 @@ const HeroCarousel = () => {
             >
                 <FiChevronRight size={24} />
             </button>
-
-            {/* Dots */}
+            
             <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
                 {banners.map((_, index) => (
                     <span

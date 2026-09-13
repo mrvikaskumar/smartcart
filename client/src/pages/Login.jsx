@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { loginUser } from "../api/userAuth";
+import { loginUser } from "../api/userAuth"; 
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -14,10 +14,10 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await loginUser(form);
-            setUserContext(res.data.user);
-            navigate("/"); // go to home after login
+            setUserContext(res.data.user); 
+            navigate("/");
         } catch (err) {
-            alert(err.response?.data?.message || "Invalid credentials");
+            alert(err?.response?.data?.message || "Server error: Unable to login");
         }
     };
 

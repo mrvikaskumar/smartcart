@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getCart, updateCart, removeFromCart, clearCart } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"; 
 
 const CartPage = () => {
     const [cart, setCart] = useState(null);
     const navigate = useNavigate();
 
-    // ✅ Get logged-in user dynamically
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user } = useContext(AuthContext);
     const userId = user?.id;
 
     const fetchCart = async () => {
-        if (!userId) return; // If user not logged in, do nothing
+        if (!userId) return; 
         try {
             const data = await getCart(userId);
             setCart(data);
@@ -22,12 +22,12 @@ const CartPage = () => {
 
     useEffect(() => {
         fetchCart();
-    }, [userId]); // refetch if user changes
+    }, [userId]); 
 
     const handleQuantityChange = async (productId, quantity) => {
         if (quantity < 1) return;
         await updateCart(userId, productId, quantity);
-        fetchCart();
+        fetchCart(); 
     };
 
     const handleRemove = async (productId) => {

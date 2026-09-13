@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllProducts, deleteProduct } from "../api/api"; // ✅ API helpers
+import { getAllProducts, deleteProduct } from "../api/api"; 
 import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 
 const AdminProducts = () => {

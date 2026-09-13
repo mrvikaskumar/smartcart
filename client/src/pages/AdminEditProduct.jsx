@@ -44,6 +44,7 @@ const AdminEditProduct = () => {
             updateData.append("price", formData.price);
             updateData.append("category", formData.category);
             updateData.append("stock", formData.stock);
+          
             if (image) updateData.append("image", image);
 
             await updateProduct(id, updateData);
@@ -52,7 +53,7 @@ const AdminEditProduct = () => {
             setTimeout(() => navigate("/admin/products"), 1500);
         } catch (err) {
             console.error(err);
-            setMessage(err.message || err.message?.message || "Server error");
+            setMessage(err?.response?.data?.message || err.message || "❌ Server error occurred");
         } finally {
             setLoading(false);
         }

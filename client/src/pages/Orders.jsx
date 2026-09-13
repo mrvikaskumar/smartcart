@@ -12,12 +12,8 @@ const Orders = () => {
 
         const fetchOrders = async () => {
             try {
-                const allOrders = await getAllOrders();
-                // Filter orders for logged-in user
-                const userOrders = allOrders.filter(
-                    (order) => order.userId === userId || order.userId?._id === userId
-                );
-                setOrders(userOrders);
+                const data = await getAllOrders();
+                setOrders(data || []);
             } catch (err) {
                 console.error("Error fetching orders:", err);
             }
@@ -46,8 +42,9 @@ const Orders = () => {
                                 <p className="text-gray-600">
                                     Status:{" "}
                                     <span
-                                        className={`font-bold ${order.status === "paid" ? "text-green-600" : "text-red-600"
-                                            }`}
+                                        className={`font-bold ${
+                                            order.status === "paid" ? "text-green-600" : "text-red-600"
+                                        }`}
                                     >
                                         {order.status || "Pending"}
                                     </span>

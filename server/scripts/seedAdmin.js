@@ -1,10 +1,8 @@
 import dotenv from "dotenv";
-dotenv.config({ path: "../.env" }); // <-- make sure path points to server/.env
+dotenv.config({ path: "../.env" }); 
 
 import mongoose from "mongoose";
 import Admin from "../models/Admin.js";
-
-dotenv.config();
 
 const seed = async () => {
     try {

@@ -14,7 +14,6 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
     const navigate = useNavigate();
     const { admin } = useContext(AuthContext);
 
-    // ✅ Fetch products on mount
     useEffect(() => {
         let mounted = true;
 
@@ -38,12 +37,10 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
         };
     }, []);
 
-    // ✅ Redirect if admin logs in
     useEffect(() => {
         if (admin) navigate("/admin/dashboard");
     }, [admin, navigate]);
 
-    // ✅ Optimized filtering with useMemo (prevents recalculations)
     const filteredProducts = useMemo(() => {
         if (selectedCategory === "All") return products;
         return products.filter(
@@ -53,7 +50,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
 
     return (
         <div className="flex relative min-h-[calc(100vh-64px)]">
-            {/* ✅ Sidebar */}
+            {/* Sidebar */}
             <div
                 className={`fixed top-0 left-0 h-screen bg-white z-50 shadow-lg transition-transform duration-300
                 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
@@ -67,7 +64,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
                 />
             </div>
 
-            {/* ✅ Mobile overlay */}
+            {/* Mobile overlay */}
             {sidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-20 z-40 md:hidden cursor-pointer transition-opacity"
@@ -75,7 +72,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
                 />
             )}
 
-            {/* ✅ Main content */}
+            {/* Main content */}
             <div
                 className={`flex-1 flex flex-col transition-all duration-300 
                 ${sidebarOpen ? "md:ml-64" : "md:ml-0"}`}
@@ -85,24 +82,24 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
 
                 <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                    {/* ✅ Loading state */}
+                    {/* Loading state */}
                     {loading && (
                         <p className="text-gray-600 col-span-full text-center">Loading...</p>
                     )}
 
-                    {/* ✅ Error state */}
+                    {/* Error state */}
                     {error && !loading && (
                         <p className="text-red-500 col-span-full text-center">{error}</p>
                     )}
 
-                    {/* ✅ Empty state */}
+                    {/* Empty state */}
                     {!loading && !error && filteredProducts.length === 0 && (
                         <p className="text-gray-600 col-span-full text-center">
                             No products available
                         </p>
                     )}
 
-                    {/* ✅ Product list */}
+                    {/* Product list */}
                     {!loading &&
                         !error &&
                         filteredProducts.map((product) => (
