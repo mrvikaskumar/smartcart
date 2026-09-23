@@ -12,8 +12,10 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "axios": "^1.13.2",
-    "cloudinary": "^2.8.0",
-    "multer": "^2.0.2",
+    "cloudinary": "^2.11.0",
+    "dotenv": "^18.0.3",
+    "multer": "^2.4.0",
+    "razorpay": "^2.9.8",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",

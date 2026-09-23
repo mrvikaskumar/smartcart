@@ -12,6 +12,7 @@ router.post("/login", async (req, res) => {
 
     try {
         const admin = await Admin.findOne({ email });
+        
         if (!admin) return res.status(404).json({ message: "Admin not found" });
 
         const isMatch = await admin.comparePassword(password);
